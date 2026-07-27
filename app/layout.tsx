@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Sidebar from "@/components/Sidebar";
+import { Cairo } from "next/font/google";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const cairo = Cairo({
+  subsets: ["arabic"],
+  variable: "--font-cairo",
 });
 
 const geistMono = Geist_Mono({
@@ -23,11 +31,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+<html
+  lang="ar"
+  dir="rtl"
+  className={`${cairo.variable} antialiased h-full`}>
+      <body className="min-h-full flex">
+        <Sidebar />
+        <main className="flex-1">{children}</main>
+      </body>
     </html>
   );
 }
