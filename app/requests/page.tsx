@@ -1,7 +1,8 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import apiClient from '@/types/apiClient'
-import { Eye, X } from 'lucide-react';
+import { Eye, X, Pencil } from 'lucide-react';
+import { useRouter } from 'next/navigation'
 
 interface Client {
   id: string;
@@ -54,11 +55,41 @@ const statusOptions: Record<string, { label: string; style: string }> = {
 
 export default function ClientRequestsPage() {
 
+  const router = useRouter();
+
   // modal state
   const [isOpen, setIsOpen] = useState(false);
-  const openModal = () => setIsOpen(true);
+  const [editingId, setEditingId] = useState<string | null>(null); // null = وضع الإضافة, وإلا وضع التعديل
+
+  const openCreateModal = () => {
+    setEditingId(null);
+    setForm(emptyForm);
+    setError(null);
+    setIsOpen(true);
+  };
+
+  const openEditModal = (request: ClientRequest) => {
+    setEditingId(request.id ?? null);
+    setForm({
+      client_id: request.client_id,
+      type: request.type,
+      status: request.status,
+      submission_date: request.submission_date,
+      expected_date: request.expected_date ?? "",
+      verification_date: request.verification_date ?? "",
+      has_facebook_account: request.has_facebook_account,
+      has_business_manager: request.has_business_manager,
+      duns_status: request.duns_status ?? "",
+      verification_status: request.verification_status ?? "",
+      notes: request.notes ?? "",
+    });
+    setError(null);
+    setIsOpen(true);
+  };
+
   const closeModal = () => {
     setIsOpen(false);
+    setEditingId(null);
     setForm(emptyForm);
     setError(null);
   };
@@ -124,7 +155,11 @@ export default function ClientRequestsPage() {
     setSubmitting(true);
     setError(null);
 
-    apiClient.post('request', form)
+    const request = editingId
+      ? apiClient.put(`request/${editingId}`, form)
+      : apiClient.post('request', form);
+
+    request
       .then(() => {
         fetchRequests();
         closeModal();
@@ -166,7 +201,7 @@ export default function ClientRequestsPage() {
           </div>
           <div>
             <button
-              onClick={openModal}
+              onClick={openCreateModal}
               className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-[#1F5EFF] hover:bg-[#1848D6] active:bg-[#123499] transition-colors px-5 py-2.5 rounded-xl shadow-sm shadow-blue-900/10"
             >
               <span className="text-lg leading-none">+</span> طلب جديد
@@ -249,9 +284,22 @@ export default function ClientRequestsPage() {
                       <td className="px-5 py-3.5 text-[#475467]">{request.expected_date ?? "—"}</td>
                       <td className="px-5 py-3.5 text-[#475467]">{request.verification_date ?? "—"}</td>
                       <td className="px-5 py-3.5 text-[#475467]">
-                        <button className="cursor-pointer" onClick={() => console.log(request)}>
-                          <Eye size={18} />
-                        </button>
+                        <div className="flex items-center gap-3">
+                          <button
+                            className="cursor-pointer hover:text-[#101828]"
+                            onClick={() => router.push(`/requests/${request.id}`)}
+                            title="عرض"
+                          >
+                            <Eye size={18} />
+                          </button>
+                          <button
+                            className="cursor-pointer hover:text-[#1F5EFF]"
+                            onClick={() => openEditModal(request)}
+                            title="تعديل"
+                          >
+                            <Pencil size={16} />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))
@@ -274,7 +322,9 @@ export default function ClientRequestsPage() {
           >
             <div className="bg-white rounded-2xl p-6 shadow-xl shadow-black/10">
               <div className="flex justify-between items-center mb-5">
-                <h2 className="text-lg font-bold text-[#101828]">إضافة طلب</h2>
+                <h2 className="text-lg font-bold text-[#101828]">
+                  {editingId ? "تعديل الطلب" : "إضافة طلب"}
+                </h2>
                 <button type="button" onClick={closeModal} className="text-[#667085] hover:text-[#101828]">
                   <X size={18} />
                 </button>
@@ -415,7 +465,7 @@ export default function ClientRequestsPage() {
                   type="submit"
                   disabled={submitting}
                 >
-                  {submitting ? "جاري الحفظ..." : "حفظ"}
+                  {submitting ? "جاري الحفظ..." : (editingId ? "تحديث" : "حفظ")}
                 </button>
                 <button
                   onClick={closeModal}

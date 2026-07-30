@@ -142,7 +142,7 @@ export default function SubscriptionsPage() {
             <p className="text-2xl font-bold text-[#101828] tracking-tight">الاشتراكات</p>
             <p className="text-sm text-[#667085] mt-1">إدارة اشتراكات العملاء وحالاتها</p>
           </div>
-          <div>
+          <div> 
             <button
               onClick={openModal}
               className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-[#1F5EFF] hover:bg-[#1848D6] active:bg-[#123499] transition-colors px-5 py-2.5 rounded-xl shadow-sm shadow-blue-900/10"
