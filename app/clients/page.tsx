@@ -171,7 +171,7 @@ export default function Page() {
                       key={client.id ?? index}
                       className="border-b border-[#EAECF0] last:border-0 hover:bg-[#F9FAFB] transition-colors"
                     >
-                      <td className="px-5 py-3.5 font-medium text-[#101828]">{client.name}</td>
+                      <td className="px-5 py-3.5 font-medium text-[#101828]">{client.company_name}</td>
                       <td className="px-5 py-3.5 text-[#475467]">{client.company_name}</td>
                       <td className="px-5 py-3.5 text-[#475467]">{client.phone}</td>
                       <td className="px-5 py-3.5 text-[#475467]">{client.email}</td>
