@@ -5,7 +5,7 @@ import { Eye, X } from 'lucide-react';
 
 interface Client {
   id: string;
-  name: string;
+  company_name: string;
 }
 
 interface Subscription {
@@ -124,9 +124,9 @@ export default function SubscriptionsPage() {
   }, []);
 
   const getClientName = (subscription: Subscription) => {
-    if (subscription.client?.name) return subscription.client.name;
+    if (subscription.client?.company_name) return subscription.client.company_name;
     const found = clients.find((c) => c.id === subscription.client_id);
-    return found ? found.name : subscription.client_id;
+    return found ? found.company_name : subscription.client_id;
   };
 
   const activeCount = subscribersList.filter((s) => s.status === "active").length;
@@ -264,7 +264,7 @@ export default function SubscriptionsPage() {
                   </option>
                   {clients.map((client) => (
                     <option key={client.id} value={client.id}>
-                      {client.name}
+                      {client.company_name}
                     </option>
                   ))}
                 </select>

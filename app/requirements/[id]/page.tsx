@@ -187,7 +187,7 @@ export default function Page() {
 
                     {key === "drive_link" && value ? (
                       
-                      <a  href={value}
+                       <a href={value}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm mt-1 text-[#1F5EFF] hover:underline truncate block"
