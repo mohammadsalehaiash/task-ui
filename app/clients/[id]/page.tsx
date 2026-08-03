@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import apiClient from '@/types/apiClient'
-import { ArrowRight, Phone, Mail, Building2, FileText } from 'lucide-react';
+import { ArrowRight, Phone, Mail, Building2, FileText, User, Calendar } from 'lucide-react';
 
 interface Client {
   id: string;
@@ -11,6 +11,8 @@ interface Client {
   phone: string;
   email: string;
   notes: string;
+  responsible_person: string;
+  client_date: string;
 }
 
 interface Subscription {
@@ -156,6 +158,14 @@ export default function ClientDetailsPage() {
             <div className="flex items-center gap-2.5 text-sm text-[#344054]">
               <Mail size={16} className="text-[#667085]" />
               {client.email || "—"}
+            </div>
+            <div className="flex items-center gap-2.5 text-sm text-[#344054]">
+              <User size={16} className="text-[#667085]" />
+              {client.responsible_person || "—"}
+            </div>
+            <div className="flex items-center gap-2.5 text-sm text-[#344054]">
+              <Calendar size={16} className="text-[#667085]" />
+              {client.client_date ? client.client_date.substring(0, 10) : "—"}
             </div>
           </div>
 
