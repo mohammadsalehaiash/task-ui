@@ -1,6 +1,6 @@
  import { LucideIcon } from "lucide-react";
- import { LayoutDashboard, Users , FileText , CreditCard , ListChecks , FolderOpen  } from 'lucide-react';
-
+ import { LayoutDashboard, Users , FileText , CreditCard , ListChecks , FolderOpen   , CircleAlert   } from 'lucide-react';
+ 
  export interface NavItem {
      lable : string ;
      href: string ; 
@@ -13,4 +13,5 @@
      { label: "الطلبات", href: "/requests", icon: FileText },
      { label: "المتطلبات", href: "/requirements", icon: FolderOpen  },
      { label: "الاشتراكات", href: "/subscriptions", icon: CreditCard },
+     { label: "مكتب الدعم", href: "/support", icon: CircleAlert    },
      { label: "المهام", href: "/tasks", icon: ListChecks },]
