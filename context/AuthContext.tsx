@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     apiClient
-      .get('/user')
+      .get('user')
       .then((res) => setUser(res.data.data))
       .catch(() => Cookies.remove('auth_token'))
       .finally(() => setLoading(false));
@@ -40,7 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = useCallback(
     async (email: string, password: string) => {
-      const res = await apiClient.post('/login', { email, password });
+      const res = await apiClient.post('login', { email, password });
       const { token, user } = res.data.data;
       Cookies.set('auth_token', token, { expires: 7, sameSite: 'lax' });
       setUser(user);
@@ -51,7 +51,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = useCallback(async () => {
     try {
-      await apiClient.post('/logout');
+      await apiClient.post('logout');
     } finally {
       Cookies.remove('auth_token');
       setUser(null);
