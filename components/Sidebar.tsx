@@ -2,14 +2,21 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogOut } from "lucide-react";
 import { navItems } from "@/types/nav";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { logout } = useAuth();
 
   const isItemActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(href + "/");
+  };
+
+  const handleLogout = async () => {
+    await logout();
   };
 
   return (
@@ -21,7 +28,7 @@ export default function Sidebar() {
         <p className="text-lg font-bold text-white">لوحة التحكم</p>
       </div>
 
-      <nav className="flex flex-col gap-1">
+      <nav className="flex flex-col gap-1 flex-1">
         {navItems.map((item) => {
           const active = isItemActive(item.href);
           const Icon = item.icon;
@@ -46,6 +53,14 @@ export default function Sidebar() {
           );
         })}
       </nav>
+
+      <button
+        onClick={handleLogout}
+        className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium text-[#8A93A6] hover:bg-white/5 hover:text-[#F04438] transition-colors"
+      >
+        <LogOut size={18} />
+        تسجيل خروج
+      </button>
     </aside>
   );
 }
