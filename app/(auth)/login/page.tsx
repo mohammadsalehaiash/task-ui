@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { AxiosError } from "axios";
+export const dynamic = "force-dynamic";
+export const revalidate = 0
 
 export default function LoginPage() {
   const { login } = useAuth();
