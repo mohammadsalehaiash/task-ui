@@ -2,8 +2,8 @@ import axios from "axios"
 import Cookies from "js-cookie"
 
 const apiClient = axios.create({
-  baseURL: "https://api-crm.mohammadsaleh.online/api/",
-    // baseURL: "http://127.0.0.1:8000/api/",
+  // baseURL: "https://api-crm.mohammadsaleh.online/api/",
+    baseURL: "http://127.0.0.1:8000/api/",
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",

@@ -22,7 +22,7 @@ export default function Sidebar() {
   return (
     <aside
       dir="rtl"
-      className="w-60 h-screen fixed bg-[#0B0E14] border-l border-white/5 p-4 flex flex-col gap-1 shrink-0"
+      className="w-60 h-screen sticky top-0 bg-[#0B0E14] border-l border-white/5 p-4 flex flex-col gap-1 shrink-0"
     >
       <div className="px-2 py-3 mb-2">
         <p className="text-lg font-bold text-white">لوحة التحكم</p>
